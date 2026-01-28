@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static 'images/favicon.jpg' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    
+    {% block links %}{% endblock links %}
+  
+    <title>{% block title %}{% endblock title %}</title>
+  </head>
+  <body>
+    {% include 'header/header.html' %}
+    
+    {% block content %}{% endblock content %}
+    
+    {% include 'footer/footer.html' %}
+
+    <!-- JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    {% block scripts %}{% endblock scripts %}
+  </body>
+</html>
