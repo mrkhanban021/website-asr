@@ -7,17 +7,24 @@ venv/
 env/
 .env/
 .venv
+.env
+.env.prod
 
 # Git
 .git
 .gitignore
+.dockerignore
+
 
 # Django stuff
 *.sqlite3
 media/
 staticfiles/
 *.log
-
+static/
+compose-dev/
+docker/django
+docker/nginx/Dockerfile
 # IDEs
 .vscode/
 .idea/

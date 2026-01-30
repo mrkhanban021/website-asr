@@ -1,0 +1,18 @@
+services:
+  django-app:
+    build:
+      context: ../
+      dockerfile: docker/django/Dockerfile
+    image: website:v0.1
+    volumes:
+      - ../:/app
+      - static_files:/app/static
+      - media_files:/app/media
+
+    env_file:
+      - ../.env.prod
+
+    ports:
+      - "8000:8000"
+
+    restart: always

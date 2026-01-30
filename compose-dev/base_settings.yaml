@@ -1,0 +1,4 @@
+volumes:
+  static_files: {}
+  media_files: {}
+  pgdata: {}

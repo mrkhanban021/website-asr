@@ -1,0 +1,13 @@
+services:
+  db-postgres:
+    image: postgres:17.7
+    environment:
+      POSTGRES_DB: ${NOTIF_DB_NAME}
+      POSTGRES_USER: ${NOTIF_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${NOTIF_POSTGRES_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+    ports:
+      - "5432:5432"

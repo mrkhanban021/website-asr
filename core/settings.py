@@ -6,7 +6,7 @@ import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ENV_FILE = BASE_DIR / '.env'
+ENV_FILE = BASE_DIR / '.env.prod'
 env = environ.Env()
 
 if ENV_FILE.exists():
@@ -14,12 +14,12 @@ if ENV_FILE.exists():
     
 
 
-SECRET_KEY = 'django-insecure-(t1(+m01r%161$ug5qmw-k8d-m&q$(xx52om#ypy@@&x($=zb#'
+SECRET_KEY = env('SECRET_KEY')
 
 
-DEBUG = True
+DEBUG = env.bool('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 
@@ -69,8 +69,17 @@ ASGI_APPLICATION = 'core.asgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env.int('DB_PORT'),
+        'CONN_MAX_AGE': env.int('DB_CONN_MAX_AGE'),
+        'OPTIONS': {
+            'connect_timeout': env.int('DB_CONN_TIMEOUT'),
+        }
+
     }
 }
 

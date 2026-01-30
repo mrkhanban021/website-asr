@@ -1,0 +1,5 @@
+include:
+  - compose-dev/base_settings.yaml
+  - compose-dev/postgres.yaml
+  - compose-dev/django_compose.yaml
+  - compose-dev/nginx_compose.yaml
