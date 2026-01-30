@@ -6,6 +6,13 @@ import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ENV_FILE = BASE_DIR / '.env'
+env = environ.Env()
+
+if ENV_FILE.exists():
+    environ.Env.read_env(ENV_FILE)
+    
+
 
 SECRET_KEY = 'django-insecure-(t1(+m01r%161$ug5qmw-k8d-m&q$(xx52om#ypy@@&x($=zb#'
 
@@ -23,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'identify.apps.IdentifyConfig',
     'website.apps.WebsiteConfig',
 ]
 
