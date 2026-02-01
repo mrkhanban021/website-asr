@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     date_calender.textContent = new Intl.DateTimeFormat(
       "fa-IR",
-      { dateStyle: "long" }
+      { dateStyle: "medium" }
     ).format(today);
   }
 });

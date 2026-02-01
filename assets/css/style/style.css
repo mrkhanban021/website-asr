@@ -42,3 +42,23 @@ ul li{
     list-style: none;
 }
 
+/* فونت در موبایل کوچیک‌تر */
+.text-responsive {
+  font-size: 10px;
+}
+
+/* تبلت و بالاتر */
+@media (min-width: 768px) {
+  .text-responsive {
+    font-size: 14px;
+  }
+}
+
+/* دسکتاپ بزرگ‌تر */
+@media (min-width: 1200px) {
+  .text-responsive {
+    font-size: 14px;
+  }
+}
+
+

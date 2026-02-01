@@ -18,6 +18,7 @@ db.sqlite3
 media/
 staticfiles/
 *.sqlite3
+static/
 
 # Docker
 docker-compose.override.yml

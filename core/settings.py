@@ -11,7 +11,6 @@ env = environ.Env()
 
 if ENV_FILE.exists():
     environ.Env.read_env(ENV_FILE)
-    
 
 
 SECRET_KEY = env('SECRET_KEY')
@@ -22,7 +21,6 @@ DEBUG = env.bool('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,9 +28,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'meta',
     'identify.apps.IdentifyConfig',
     'website.apps.WebsiteConfig',
 ]
+
+SITE_ID = 1
+AUTH_USER_MODEL = 'identify.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,6 +60,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.utils.context_processors.default_meta',
             ],
         },
     },
@@ -63,8 +68,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.asgi.application'
-
-
 
 
 DATABASES = {
@@ -84,8 +87,6 @@ DATABASES = {
 }
 
 
-
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -100,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 
 LANGUAGE_CODE = 'en-us'
@@ -118,9 +118,22 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR / 'static')
 
-STATICFILES_DIRS  = [
+STATICFILES_DIRS = [
     BASE_DIR / 'assets'
 ]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR / "media")
+
+
+META_SITE_PROTOCOL = 'https'
+META_SITE_DOMAIN = 'asr-elevator.ir'
+META_SITE_NAME = 'آریان سیستم رو'
+META_SITE_TYPE = 'website'
+META_DEFAULT_TITLE = 'آریان سیستم رو'
+META_DEFAULT_DESCRIPTION = 'آریان سیستم رو تولید کننده درب تمام اتوماتیک آسانسور'
+META_DEFAULT_KEYWORDS = ['درب آسانسور', 'درب طبقه آسانسور راد پلاس', 'درب طبقه آسانسور سلکوم پلاس',
+                         'قطعات یدکی درب آسانسور', 'بهترین درب آسانسور', 'سلکوم', 'سلکوم پلاس', 'راد', 'رادپلاس', 'ایران']
+META_DEFAULT_IMAGE = '/static/images/favicon.png'
+META_USE_OG_PROPERTIES = True
+META_USE_TWITTER_PROPERTIES = True
