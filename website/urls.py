@@ -1,8 +1,7 @@
-from django.urls import path
-from .views import home
+from django.urls import path, include
 
 app_name = 'website'
 
 urlpatterns = [
-    path('', home, name="home_page")
+    path('', include('website.api.home_url', namespace='website'))
 ]

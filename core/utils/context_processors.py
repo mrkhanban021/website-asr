@@ -1,5 +1,7 @@
 from django.conf import settings
+from website.selectors import get_data_site_settings
 from meta.views import Meta
+from django.core.cache import cache
 
 def default_meta(request):
     return {
@@ -16,3 +18,13 @@ def default_meta(request):
             
         )
     }
+    
+def get_global_data(request):
+    data = cache.get("global_site_data")
+    
+    if not data:
+        data = {
+            "site": get_data_site_settings(),
+        }
+        cache.set("global_site_data", data, 60 * 60)
+    return data

@@ -3,3 +3,4 @@ include:
   - compose-dev/postgres.yaml
   - compose-dev/django_compose.yaml
   - compose-dev/nginx_compose.yaml
+  - compose-dev/redis.yaml

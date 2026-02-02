@@ -8,7 +8,6 @@
     <link rel="icon" href="{% static 'images/favicon.png' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style/style.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style/header.css' %}">
 
     {% include 'meta/meta.html' %}
     {% block extra_meta %}{% endblock extra_meta %}
@@ -18,13 +17,19 @@
     <title>{% block title %}{% endblock title %}</title>
   </head>
   <body>
-    {% include 'header/header.html' %}
-    <main class="main_tag">
+
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <main id="main-content" style="display:none;">
+      {% include 'header/header.html' %}
 
       {% block content %}{% endblock content %}
+
+      {% include 'footer/footer.html' %}
     </main>
     
-    {% include 'footer/footer.html' %}
 
     <!-- JS -->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>

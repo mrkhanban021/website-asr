@@ -61,6 +61,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.utils.context_processors.default_meta',
+                'core.utils.context_processors.get_global_data',
             ],
         },
     },
@@ -83,6 +84,18 @@ DATABASES = {
             'connect_timeout': env.int('DB_CONN_TIMEOUT'),
         }
 
+    }
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": env('DJANGO_CACHE_URL'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'IGNORE_EXCEPTIONS': True,
+        },
+        "KEY_PREFIX": "site_asr",
     }
 }
 
