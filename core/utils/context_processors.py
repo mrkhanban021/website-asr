@@ -26,5 +26,5 @@ def get_global_data(request):
         data = {
             "site": get_data_site_settings(),
         }
-        cache.set("global_site_data", data, 60 * 60)
+        cache.set("global_site_data", data, 2)
     return data

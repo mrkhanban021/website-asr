@@ -6,7 +6,10 @@
         <h6 class="footer-title">دسترسی سریع</h6>
         <ul class="list-unstyled footer-links">
           <li>
-            <a class="text-responsive w-75 text-start" class="#" href="#"
+            <a
+              class="text-responsive w-75 text-start"
+              href="{% url 'website:home:home_page' %}"
+              target="_blank"
               >صفحه اصلی</a
             >
           </li>
@@ -28,6 +31,16 @@
               >سوالات متداول</a
             >
           </li>
+
+          {% if user.is_authenticated %} {% else %}
+          <li>
+            <a
+              class="text-responsive w-75 text-start"
+              href="{% url 'identify:endpoint:register_form' %}"
+              >ورود/ثبت نام</a
+            >
+          </li>
+          {% endif %}
         </ul>
       </div>
 
@@ -63,29 +76,46 @@
       <div class="col-12 col-md-3">
         <h6 class="footer-title">راه های ارتباطی</h6>
         <ul class="list-unstyled footer-links">
-          <li class="d-flex justify-content-start gap-2">
+          <li
+            class="d-flex justify-content-start gap-2"
+            style="cursor: default"
+          >
             <p class="text-responsive w-100 m-0 text-start">
-              آدرس: تهران شهرستان پردیس شهرک صنعتی خرمدشت بلوار اصلی سوم شرقی
-              پلاک 56
+              {{site.data.address}}
             </p>
           </li>
           <li class="d-flex justify-content-start gap-2">
-            <a class="text-responsive text-start" href="tel:+989128938178"
-              >فروش درب: 09128938178</a
+            <a
+              class="text-responsive text-start"
+              href="tel:{{site.data.phone_sales}}"
+              >فروش درب: <span dir="ltr">{{ site.data.phone_sales }}</span>
+            </a>
+          </li>
+          <li class="d-flex justify-content-start align-items-center gap-2">
+            <a
+              class="text-responsive w-100 text-start"
+              href="tel:{{site.data.phone_support}}"
+              >قطعات یدکی:
+              <span dir="ltr"> {{site.data.phone_support}} </span></a
             >
           </li>
           <li class="d-flex justify-content-start align-items-center gap-2">
-            <a class="text-responsive w-100 text-start" href="tel:+989101107033"
-              >قطعات یدکی: 09101107033</a
+            <a
+              class="text-responsive w-100 text-start"
+              href="tel:{{site.data.phone_factory}}"
+            >
+              تلفن کارخانه:
+              <span dir="ltr">{{site.data.phone_factory}}</span></a
             >
           </li>
-          <li class="d-flex justify-content-start align-items-center gap-2">
-            <a class="text-responsive w-100 text-start" href="tel:02176218555">
-              تلفن کارخانه: 02176218555</a
-            >
-          </li>
-          <li class="d-flex justify-content-start align-items-center gap-2">
-            <p class="m-0 text-start">کد پستی: 1653372504</p>
+          <li
+            class="d-flex justify-content-start align-items-center gap-2"
+            style="cursor: default"
+          >
+            <p class="m-0 text-start">
+              کد پستی:
+              <span dir="ltr">{{site.data.zip_code |default:111}}</span>
+            </p>
           </li>
         </ul>
       </div>
@@ -94,7 +124,11 @@
         <h6 class="footer-title">شبکه های اجتماعی</h6>
         <ul class="list-unstyled footer-links-sosial d-flex flex-row gap-2">
           <li class="d-flex justify-content-start gap-2">
-            <a href="#">
+            <a
+              href="{{site.data.instagram|default:'https://www.instagram.com/ariansystemro/'}}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -110,7 +144,11 @@
             </a>
           </li>
           <li class="d-flex justify-content-start gap-2">
-            <a href="#">
+            <a
+              href=" {{site.data.telegram | default:'https://t.me/ariansystemro' }} "
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -126,7 +164,11 @@
             </a>
           </li>
           <li class="d-flex justify-content-start align-items-center gap-2">
-            <a href="#">
+            <a
+              href=" {{site.data.linkedin|default:'https://ir.linkedin.com/company/arian-system-ro-asr'}}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -187,6 +229,7 @@
   </div>
 
   <div class="text-center text-danger py-4 mt-4 border-top">
-    تمامی حقوق برای سایت محفوظ است.
+    {{site.data.copyright_text | default:"تمامی حقوق برای سایت محفوظ است"}}
+    <span>{{site.date}}</span>
   </div>
 </footer>

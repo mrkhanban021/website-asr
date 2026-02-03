@@ -10,7 +10,20 @@
       data-bs-title="صفحه اصلی"
       style="--bs-icon-link-transform: translate3d(0, -0.125rem, 0)"
       href="{% url 'website:home:home_page' %}"
-      ><img src="{% static 'images/favicon.png' %}" class="object-fit-cover logo-img" alt="">
+    >
+      {% if site.data.logo %}
+      <img
+        src="{{site.data.logo.url}}"
+        class="object-fit-cover logo-img"
+        alt="logo"
+      />
+      {% else %}
+      <img
+        src="{% static 'images/favicon.png' %}"
+        class="object-fit-cover logo-img"
+        alt="logo"
+      />
+      {% endif %}
     </a>
     <button
       class="navbar-toggler"
@@ -174,7 +187,9 @@
       </div>
 
       <div class="dropdown me-md-5">
-        <button
+        
+        {% if user.is_authenticated  %}
+          <button
           class="btn btn-light w-100 dropdown-toggle text-responsive"
           type="button"
           data-bs-toggle="dropdown"
@@ -194,6 +209,7 @@
           </svg>
           اطلاعات کاربری
         </button>
+
         <ul class="dropdown-menu">
           <li><a class="dropdown-item text-responsive" href="#">پروفایل</a></li>
           <li>
@@ -207,6 +223,12 @@
             <a class="dropdown-item text-responsive" href="#">خارج شدن</a>
           </li>
         </ul>
+        {% else %}
+           <a href="{% url 'identify:endpoint:register_form' %}" class="text-responsive text-black btn btn-light w-100 border">ورود/ثبتنام</a>
+        {% endif %}
+          
+       
+        
       </div>
     </div>
   </div>
