@@ -2,18 +2,28 @@ from django.shortcuts import (
     render,
     redirect
 )
-from  identify.forms import (
+from identify.forms import (
     RegisterOnSite
 )
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 def register_form(request):
     if request.method == 'POST':
-        pass
+        form = RegisterOnSite(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = User.objects.create_user(
+                email=data.get('email'),
+                password=data.get('password_2')
+            ) # type: ignore
+            return redirect('identify:endpoint:login_form')
     else:
         form = RegisterOnSite()
-        context = {
-            'form': form
-        }
-    
-    return render(request , 'identify/register.html')
+    context = {
+        'form': form  # type: ignore
+    }
+
+    return render(request, 'identify/register.html', context)

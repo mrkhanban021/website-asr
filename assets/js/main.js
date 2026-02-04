@@ -18,7 +18,6 @@ const tooltipList = [...tooltipTriggerList].map(
 );
 
 window.addEventListener("load", function () {
-  // وقتی کل صفحه و منابع لود شدند
   document.getElementById("loading-screen").style.display = "none";
   document.getElementById("main-content").style.display = "block";
 });
