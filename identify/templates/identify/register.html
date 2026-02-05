@@ -1,5 +1,10 @@
-{% extends 'home/base_auth.html' %} {% load static %} {% block title %} ثبت نام
-{% endblock title %} {% block links %}
+{% extends 'home/base_auth.html' %}
+ {% load static %}
+ {% load socialaccount %}
+  {% block title %}
+   ثبت نام
+{% endblock title %}
+ {% block links %}
 <link rel="stylesheet" href="{% static 'css/register.css' %}" />
 {% endblock links %} {%block content %}
 
@@ -140,7 +145,7 @@
     </div>
 
     <div class="google_login">
-      <a href="#" class="btn btn-outline-primary">
+      <a href="{% provider_login_url 'google' %}" class="btn btn-outline-primary">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
