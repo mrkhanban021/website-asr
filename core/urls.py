@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('website.urls', namespace="website")),
     path('identify/', include('identify.urls', namespace='identify')),
+    
 ]
 
 if settings.DEBUG:

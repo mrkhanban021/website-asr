@@ -21,3 +21,12 @@ window.addEventListener("load", function () {
   document.getElementById("loading-screen").style.display = "none";
   document.getElementById("main-content").style.display = "block";
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const toastElList = document.querySelectorAll('.toast')
+  toastElList.forEach(function (toastEl) {
+    const toast = new bootstrap.Toast(toastEl)
+    toast.show()
+  })
+})

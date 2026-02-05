@@ -7,6 +7,7 @@ from identify.forms import (
     LoginOnSite
 )
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 def login_form(request):
@@ -17,6 +18,7 @@ def login_form(request):
             user = authenticate(request, email=data.get('email'), password=data.get('password'))
             if user is not None:
                 login(request, user)
+                messages.success(request, 'با موفقیت وارد شدید')
                 return redirect('website:home:home_page')
     else:
         form = LoginOnSite()
@@ -30,4 +32,5 @@ def login_form(request):
 
 def logout_func(request):
     logout(request)
+    messages.success(request, 'با موفقیت خارج شدید')
     return redirect('website:home:home_page')

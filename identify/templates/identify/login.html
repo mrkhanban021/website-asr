@@ -1,16 +1,11 @@
-{% extends 'home/base_auth.html' %} {% load static %}
-
- {% block title %}
- ورود
-{% endblock title %}
-
-{% block links %}
+{% extends 'home/base_auth.html' %}
+ {% load static %}
+  {% block title %} ورود 
+  {%endblock title %} {% block links %}
 <link rel="stylesheet" href="{% static 'css/login.css' %}" />
 {% endblock links %}
-
-
-{% block content %}
-    <div class="main_contaner">
+ {% block content %}
+<div class="main_contaner">
   <div class="one_contaner">
     <div class="content_up">
       <h4>آریان سیستم رو</h4>
@@ -21,12 +16,24 @@
         {% csrf_token %}
         <div>
           <label for="email_field">ایمیل</label>
-          <input type="email" id="email_field" name="email" class="form-control text-start"/>
+          <input
+            type="email"
+            id="email_field"
+            name="email"
+            class="form-control text-start"
+            value="{{request.POST.email |default:''}}"
+          />
         </div>
 
         <div class="form_password">
           <label for="password_1">رمز عبور</label>
-          <input type="password" id="password_1" name="password" class="form-control" />
+          <input
+            type="password"
+            id="password_1"
+            name="password"
+            class="form-control"
+            value="{{request.POST.password |default:''}}"
+          />
           <span class="see_password" id="togglePassword_1"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
@@ -60,11 +67,24 @@
           </span>
         </div>
 
+        <div class="position-relative">
+          {% if form.non_field_errors %}
+        <div class="field-error" id="error-email">
+          {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+        </div>
+
         <button type="submit" class="btn btn-primary">وارد شوید</button>
       </form>
       <small
         >شما حساب کاربری ندارید؟
-        <a href="{% url 'identify:endpoint:register_form' %}" class="text-primary"> ثبتنام کنید</a></small
+        <a
+          href="{% url 'identify:endpoint:register_form' %}"
+          class="text-primary"
+        >
+          ثبتنام کنید</a
+        ></small
       >
     </div>
 
@@ -94,10 +114,6 @@
   </div>
 </div>
 
-
 {% block scripts %}
-  <script src="{% static 'js/login.js' %}"></script>
-{% endblock scripts %}
-  
-{% endblock content %}
-    
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock scripts %} {% endblock content %}

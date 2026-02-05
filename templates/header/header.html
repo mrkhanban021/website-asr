@@ -215,9 +215,14 @@
           <li>
             <a class="dropdown-item text-responsive" href="#">لیست مقالات</a>
           </li>
-          <li>
-            <a class="dropdown-item text-responsive" href="#">داشبورد ادمین</a>
+          
+          {% if user.is_superuser %}
+            <li>
+            <a class="dropdown-item text-responsive" href="{% url 'admin:index' %}">داشبورد ادمین</a>
           </li>
+          {% else %}
+
+          {% endif %}
           <li><hr class="dropdown-divider text-responsive" /></li>
           <li>
             <a class="dropdown-item text-responsive" href="{% url 'identify:endpoint:logout_func' %}">خارج شدن</a>

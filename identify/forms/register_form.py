@@ -4,9 +4,11 @@ from django.contrib.auth import get_user_model, authenticate
 User = get_user_model()
 
 class RegisterOnSite(forms.Form):
-    email = forms.EmailField(required=True, help_text='ایمیل کاربر')
-    password = forms.CharField(required=True, max_length=20, help_text='پسورد')
-    password_2 = forms.CharField(required=True, max_length=20, help_text='تکرار پسور')
+    email = forms.EmailField(required=True, help_text='ایمیل کاربر', error_messages={'required':'ایمیل اجباری'})
+    password = forms.CharField(required=True, max_length=20, help_text='پسورد', error_messages={'required':'رمز عبور'})
+    password_2 = forms.CharField(required=True, max_length=20, help_text='تکرار پسور', error_messages={
+        'required': 'تکرار رمز عبور',
+    })
     
     
     def clean_email(self):

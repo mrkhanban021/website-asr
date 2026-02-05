@@ -2,6 +2,7 @@ from django.shortcuts import (
     render,
     redirect
 )
+from django.contrib import messages
 from identify.forms import (
     RegisterOnSite
 )
@@ -19,6 +20,8 @@ def register_form(request):
                 email=data.get('email'),
                 password=data.get('password_2')
             ) # type: ignore
+            if user:
+                messages.success(request, 'ثبت نام شما با موفقیت انجام شد.')
             return redirect('identify:endpoint:login_form')
     else:
         form = RegisterOnSite()
