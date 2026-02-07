@@ -13,4 +13,4 @@ def get_profile(request):
     else:
         pass
     
-    return render(request, 'identify/profile.html')
+    return render(request, 'identify/panel.html')

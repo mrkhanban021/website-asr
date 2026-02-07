@@ -28,6 +28,7 @@ class SiteSetting(BaseModel):
         blank=True, null=True, help_text="لینک اینستاگرام")
     telegram = models.URLField(blank=True, null=True, help_text="لینک تلگرام")
     linkedin = models.URLField(blank=True, null=True, help_text="لینک لینکدین")
+    locations_url = models.URLField(blank=True, null=True, help_text='اندپوینت نقشه گوگل')
     copyright_text = models.CharField(max_length=200, help_text="متن کپی‌رایت")
     about_short = models.TextField(
         blank=True, null=True, help_text="توضیح کوتاه درباره سایت")
