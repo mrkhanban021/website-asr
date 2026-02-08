@@ -1,16 +1,12 @@
-{% extends 'home/base_auth.html' %} {% load static %} {% block title %} پروفایل
-کاربری {% endblock title %} {% block links %}
-<link rel="stylesheet" href="{% static 'css/panel.css' %}" />
-{% endblock links %} {% block content %}
 <div class="panel m-0">
   <div class="side_bar_desktop">
     <div class="sidebar_main">
       <ul>
         <li>
-          <a href="#">پروفایل</a>
+          <a href="{% url 'identify:endpoint:profile' %}">پروفایل</a>
         </li>
         <li>
-          <a href="#">مقالات</a>
+          <a href="{% url 'identify:endpoint:articels' %}">مقالات</a>
         </li>
         <li>
           <a href="#">تنظیمات</a>
@@ -18,193 +14,14 @@
         <li>
           <a href="#">خروج</a>
         </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
-        <li>
-          <a href="#">خروج</a>
-        </li>
       </ul>
     </div>
   </div>
-
-  <div class="main_content">
-    <div class="content">
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-      <p>dsfd</p>
-    </div>
-  </div>
-
   <div class="menu_mobile">
     <div class="main_content">
       <ul>
         <li>
-          <a href="#">
+          <a href="{% url 'identify:endpoint:profile' %}">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -221,7 +38,7 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="{% url 'identify:endpoint:articels' %}">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -280,5 +97,3 @@
     </div>
   </div>
 </div>
-
-{% block scripts %} {% endblock scripts %} {% endblock content %}

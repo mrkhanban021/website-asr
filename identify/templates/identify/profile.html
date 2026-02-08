@@ -1,0 +1,58 @@
+{% extends 'home/dashbord.html' %} {% load static %} {% block title %} پروفایل
+کاربری {% endblock title %} {% block links %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+{% endblock links %} {% block content %}
+<div class="">
+  <div class="card shadow-sm p-3 mb-3 border rounded profile-card">
+    <div class="d-flex align-items-center flex-wrap">
+
+      {% if profile.profile_images %}
+      <img
+        src="{{ profile.profile_images.url}}"
+        alt="Avatar"
+        class="rounded-circle profile-avatar"
+      />
+      {% else %}
+      <img
+        src="{% static 'images/166.jpg' %}"
+        alt="Avatar"
+        class="rounded-circle profile-avatar"
+      />
+
+      {% endif %}
+
+      <div class="profile-info ms-3">
+        <h5 class="card-title mb-1">
+          {{ profile.display_name|default:"نام کاربر" }}
+        </h5>
+        <p class="card-subtitle mb-0 text-muted">
+          {{ profile.user.email|default:"ایمیل وارد نشده" }}
+        </p>
+        <p class="text-muted small mb-0" dir="ltr">
+          {{ profile.phone_number|default:"شماره وارد نشده" }}
+        </p>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- اطلاعات بیشتر -->
+    <ul class="list-group list-group-flush profile-list">
+      <li class="list-group-item">
+        <strong>نام: </strong> {{ profile.first_name|default:"-" }}
+      </li>
+      <li class="list-group-item">
+        <strong>نام خانوادگی: </strong> {{ profile.last_name|default:"-" }}
+      </li>
+    </ul>
+
+    <div class="card-body text-center">
+      <a
+        href="{% url 'identify:endpoint:update_profile' %}"
+        class="btn btn-primary btn-sm"
+        >ویرایش پروفایل</a
+      >
+    </div>
+  </div>
+</div>
+{% endblock content %}

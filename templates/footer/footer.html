@@ -1,3 +1,4 @@
+{% load static %}
 <footer class="bg-dark text-white pt-5 text-responsive">
   <div class="container">
     <div class="row gy-4 text-start">
@@ -117,6 +118,24 @@
               <span dir="ltr">{{site.data.zip_code |default:111}}</span>
             </p>
           </li>
+          <li
+            class="d-flex justify-content-start align-items-center gap-2"
+            style="cursor: default"
+          >
+            <p class="m-0 text-start">
+              شماره اقتصادی :
+              <span dir="ltr">{{site.data.economic_number |default:111}}</span>
+            </p>
+          </li>
+          <li
+            class="d-flex justify-content-start align-items-center gap-2"
+            style="cursor: default"
+          >
+            <p class="m-0 text-start">
+              شماره پروانه استاندارد :
+              <span dir="ltr">{{site.data.standard_code |default:111}}</span>
+            </p>
+          </li>
         </ul>
       </div>
 
@@ -187,17 +206,51 @@
       </div>
 
       <!-- لوگو -->
-      <div class="col-12 col-md-3 text-center w-100">
-        <div class="bg-white rounded-4 p-3 d-inline-block w-100">
+      <div
+        class="d-md-flex flex-md-row align-items-center justify-content-between text-center"
+      >
+        <div class="bg-white rounded-4 p-3 d-inline-block">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4579.858264271996!2d51.77787952566316!3d35.739764817979626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e072cbbf86d3f%3A0xc714c6ff161f0008!2sArian%20System%20Ro!5e0!3m2!1sen!2sde!4v1770023012611!5m2!1sen!2sde"
-            width="100%"
+            width="300"
             height="200"
             style="border: 0"
             allowfullscreen=""
             loading="lazy"
           >
           </iframe>
+        </div>
+        <div class="d-flex box_logos_out">
+          <ul>
+            <li>
+              <a
+                href="https://isom.inso.gov.ir/parvaneh/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class=""
+              >
+                <img
+                  src="{% static 'images/266.jpg' %}"
+                  class="statndard_logo"
+                  alt="استاندارد"
+                />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://evat.ir/frmNewvalidationofregistration.aspx"
+                target="_blank"
+                rel="noopener noreferrer"
+                class=""
+              >
+                <img
+                  src="{% static 'images/166.jpg' %}"
+                  class="tax_logo"
+                  alt="دارایی"
+                />
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

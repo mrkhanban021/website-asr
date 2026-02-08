@@ -23,12 +23,13 @@ class SiteSetting(BaseModel):
     email = models.EmailField(
         help_text="ایمیل پشتیبانی", null=True, blank=True)
     address = models.TextField(help_text="آدرس دفتر", null=True, blank=True)
-    zip_code = models.CharField(max_length=20 , null=True, blank=True)
+    zip_code = models.CharField(max_length=20, null=True, blank=True)
     instagram = models.URLField(
         blank=True, null=True, help_text="لینک اینستاگرام")
     telegram = models.URLField(blank=True, null=True, help_text="لینک تلگرام")
     linkedin = models.URLField(blank=True, null=True, help_text="لینک لینکدین")
-    locations_url = models.URLField(blank=True, null=True, help_text='اندپوینت نقشه گوگل')
+    locations_url = models.URLField(
+        blank=True, null=True, help_text='اندپوینت نقشه گوگل')
     copyright_text = models.CharField(max_length=200, help_text="متن کپی‌رایت")
     about_short = models.TextField(
         blank=True, null=True, help_text="توضیح کوتاه درباره سایت")
@@ -36,6 +37,10 @@ class SiteSetting(BaseModel):
         max_length=7, default="#007bff", help_text="رنگ اصلی سایت")
     secondary_color = models.CharField(
         max_length=7, default="#6c757d", help_text="رنگ ثانویه سایت")
+    economic_number = models.CharField(
+        max_length=20, null=True, blank=True, help_text='شماره اقتصادی')
+    standard_code = models.CharField(
+        max_length=20, null=True, blank=True, help_text='کد قفل استاندارد')
 
     def __str__(self):
         return self.site_name

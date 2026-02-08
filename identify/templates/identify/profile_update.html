@@ -1,0 +1,76 @@
+{% extends 'home/dashbord.html' %} 
+{% load static %}
+
+{% block title %}
+  بروزرسانی پروفایل
+{% endblock title %}
+  
+
+ {% block links %}
+{%endblock links %}
+
+ {% block content %}
+<div class="card shadow-sm p-3 mb-3 border rounded">
+  <form
+    action=""
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <div>
+      <label for="first_name">نام</label>
+      <input
+        type="text"
+        name="first_name"
+        value="{{form.first_name.value}}"
+        class="form-control"
+        id="first_name"
+      />
+    </div>
+    <div>
+      <label for="last_name"> نام خانوادگی</label>
+      <input
+        type="text"
+        name="last_name"
+        value="{{form.last_name.value}}"
+        class="form-control"
+        id="last_name"
+      />
+    </div>
+    <div>
+      <label for="phone_number">شماره تلفن</label>
+      <input
+        type="text"
+        name="phone_number"
+        value="{{form.phone_number.value}}"
+        dir="ltr"
+        class="form-control"
+        id="phone_number"
+      />
+    </div>
+    <div>
+      <label for="display_name">نام نمایشی</label>
+      <input
+        type="text"
+        name="display_name"
+        value="{{form.display_name.value}}"
+        dir="ltr"
+        class="form-control"
+        id="display_name"
+      />
+    </div>
+    <div>
+      <label for="profile_images">عکس پروفایل</label>
+      <input
+        type="file"
+        name="profile_images"
+        dir="ltr"
+        class="form-control"
+        id="profile_images"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2 w-100">بروزرسانی</button>
+  </form>
+</div>
+{% endblock content %}

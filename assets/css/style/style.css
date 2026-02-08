@@ -52,15 +52,16 @@
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
-
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden ;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: 100vh;
+  box-sizing: border-box;
 }
-
 
 ul li {
   list-style: none;
@@ -101,10 +102,9 @@ ul li {
   color: #dc3545;
 }
 
-.footer-links-sosial li a:hover{
-    color: #3498db;
+.footer-links-sosial li a:hover {
+  color: #3498db;
 }
-
 
 .dot {
   width: 8px;
@@ -152,6 +152,38 @@ ul li {
 }
 
 a {
-    text-decoration: none;
-    color: #ffffff;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.box_logos_out {
+  padding: 10px;
+}
+
+.box_logos_out ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+}
+
+.box_logos_out ul li {
+  max-width: 100px;
+  height: 100px;
+}
+
+.statndard_logo {
+  object-fit: cover;
+  width: 100px;
+  height: 120px;
+  border-radius: 5px;
+}
+
+.tax_logo {
+  object-fit: cover;
+  width: 100px;
+  height: 120px;
+  border-radius: 5px;
 }

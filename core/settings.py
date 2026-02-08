@@ -193,4 +193,6 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+LOGIN_URL = '/identify/login/'
+
 
