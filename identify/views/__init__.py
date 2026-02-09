@@ -10,7 +10,3 @@ from .profile import(
     get_profile,
     update_profile
 )
-
-from .articels import (
-    get_articels
-)

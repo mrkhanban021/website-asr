@@ -67,3 +67,5 @@ class SiteSetting(BaseModel):
             models.Index(fields=['site_name']),
         ]
         ordering = ('created_time',)
+
+
