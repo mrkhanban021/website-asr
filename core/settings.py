@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'ckeditor',
     'identify.apps.IdentifyConfig',
     'website.apps.WebsiteConfig',
 ]

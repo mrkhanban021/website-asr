@@ -1,38 +1,37 @@
 {% load static %}
 <!doctype html>
 <html lang="fa" dir="rtl" data-bs-theme="light">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="{{site.data.favicon.url}}" />
-    <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style/style.css' %}" />
 
-    {% block links %}{% endblock links %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="{{site.data.favicon.url}}" />
+  <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style/style.css' %}" />
 
-    <title>آریان سیستم رو | {% block title %}{% endblock title %}</title>
-  </head>
+  {% block links %}{% endblock links %}
 
-  <body class="bg-body text-body" style="max-height: 100vh; overflow-y: hidden;">
+  <title>آریان سیستم رو | {% block title %}{% endblock title %}</title>
+</head>
 
-    <div id="loading-screen">
-        <div class="spinner"></div>
-    </div>
+<body class="bg-body text-body" style="max-height: 100vh; overflow-y: hidden;">
 
-   <main id="main-content" style="display:none;">
-       {% include 'header/header.html' %}
-      {% block content %}
-      {% endblock content %}
-       {% include 'home/tost.html' %}
+  <div id="loading-screen">
+    <div class="spinner"></div>
+  </div>
 
-    </main>
+  <main id="main-content" style="display:none;">
+    {% include 'header/header.html' %}
+    {% block content %}
+    {% endblock content %}
+    {% include 'home/tost.html' %}
 
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/htmx.min.js' %}"></script>
+  </main>
 
-    {% block scripts %}
-    
-    {% endblock scripts %}
-  </body>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block scripts %}
+  {% endblock scripts %}
+</body>
+
 </html>

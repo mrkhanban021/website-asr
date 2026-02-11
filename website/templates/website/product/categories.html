@@ -1,0 +1,23 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock title %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/product/categories.css' %}">
+{% endblock links %}
+{% block content %}
+    <div class="conta">
+        {% for category in categories %}
+            <div class="card card-img" style="width: 18rem">
+                <img src="{{ category.image.url }}" class="imgs" alt="{{category.title}}" />
+                <div class="card-body">
+                    <h5 class="card-title">{{ category.title }}</h5>
+                    <p class="card-text">{{ category.description|default:'' }}</p>
+                    <a href="{% url 'website:product:get_product' category.id %}" class="btn btn-primary">نمایش دسته بندی</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+{% block scripts %}
+{% endblock scripts %}

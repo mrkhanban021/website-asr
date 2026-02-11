@@ -18,6 +18,7 @@
         alt="logo"
       />
       {% else %}
+
       <img
         src="{% static 'images/favicon.png' %}"
         class="object-fit-cover logo-img"
@@ -55,6 +56,13 @@
             </button>
             <ul class="dropdown-menu">
               <li>
+                <a
+                  class="dropdown-item text-responsive"
+                  href="{% url 'website:product:cat' %}"
+                  >نمایش دسته بندی محصولات</a
+                >
+              </li>
+              <li>
                 <a class="dropdown-item text-responsive" href="#"
                   >کاتالوگ محصولات</a
                 >
@@ -74,7 +82,9 @@
                   >درب آسانسور نمیه اتوماتیک سلکوم</a
                 >
               </li>
-              <li><hr class="dropdown-divider text-responsive" /></li>
+              <li>
+                <hr class="dropdown-divider text-responsive" />
+              </li>
               <li>
                 <a class="dropdown-item text-responsive" href="#"
                   >قطعات یدکی آسانسور</a
@@ -115,7 +125,9 @@
                   >قیمت آسانسور</a
                 >
               </li>
-              <li><hr class="dropdown-divider text-responsive" /></li>
+              <li>
+                <hr class="dropdown-divider text-responsive" />
+              </li>
               <li>
                 <a class="dropdown-item text-responsive" href="#"
                   >سوالات متداول</a
@@ -153,7 +165,9 @@
                   >اخذ استاندارد</a
                 >
               </li>
-              <li><hr class="dropdown-divider text-responsive" /></li>
+              <li>
+                <hr class="dropdown-divider text-responsive" />
+              </li>
               <li>
                 <a class="dropdown-item text-responsive" href="#"
                   >معرفی نصاب آسانسور</a
@@ -187,9 +201,8 @@
       </div>
 
       <div class="dropdown me-md-5">
-        
-        {% if user.is_authenticated  %}
-          <button
+        {% if user.is_authenticated %}
+        <button
           class="btn btn-light w-100 dropdown-toggle text-responsive"
           type="button"
           data-bs-toggle="dropdown"
@@ -211,29 +224,44 @@
         </button>
 
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item text-responsive" href="{% url 'identify:endpoint:profile' %}">پروفایل</a></li>
+          <li>
+            <a
+              class="dropdown-item text-responsive"
+              href="{% url 'identify:endpoint:profile' %}"
+              >پروفایل</a
+            >
+          </li>
           <li>
             <a class="dropdown-item text-responsive" href="#">لیست مقالات</a>
           </li>
-          
-          {% if user.is_superuser %}
-            <li>
-            <a class="dropdown-item text-responsive" href="{% url 'admin:index' %}">داشبورد ادمین</a>
-          </li>
-          {% else %}
 
-          {% endif %}
-          <li><hr class="dropdown-divider text-responsive" /></li>
+          {% if user.is_superuser %}
           <li>
-            <a class="dropdown-item text-responsive" href="{% url 'identify:endpoint:logout_func' %}">خارج شدن</a>
+            <a
+              class="dropdown-item text-responsive"
+              href="{% url 'admin:index' %}"
+              >داشبورد ادمین</a
+            >
+          </li>
+          {% else %} {% endif %}
+          <li>
+            <hr class="dropdown-divider text-responsive" />
+          </li>
+          <li>
+            <a
+              class="dropdown-item text-responsive"
+              href="{% url 'identify:endpoint:logout_func' %}"
+              >خارج شدن</a
+            >
           </li>
         </ul>
         {% else %}
-           <a href="{% url 'identify:endpoint:register_form' %}" class="text-responsive text-black btn btn-light w-100 border">ورود/ثبتنام</a>
+        <a
+          href="{% url 'identify:endpoint:register_form' %}"
+          class="text-responsive text-black btn btn-light w-100 border"
+          >ورود/ثبتنام</a
+        >
         {% endif %}
-          
-       
-        
       </div>
     </div>
   </div>

@@ -5,12 +5,19 @@ from .models import (
     Categories,
     Color,
     Product,
-    ProductDetails,
+    Door,
     Size,
     Unit,
-    CatalogProduct
+    CatalogProduct,
+    SparePart,
+    Usage,
+    ProductComment
 )
 
+
+@admin.register(Usage)
+class UsageAdmin(admin.ModelAdmin):
+    list_display = ('title',)
 
 # ---------- SiteSetting ----------
 @admin.register(SiteSetting)
@@ -22,11 +29,23 @@ class SiteSettingAdmin(admin.ModelAdmin):
 
 # ---------- Inlines for Product ----------
 class ProductDetailsInline(admin.StackedInline):
-    model = ProductDetails
+    model = Door
+    can_delete = False
+    readonly_fields = ('created_time', 'updated_time')
+    filter_horizontal =('usage',)
+    extra = 0
+
+class ProductCommentAdmin(admin.StackedInline):
+    model = ProductComment
+    can_delete = False
+    readonly_fields =  ('created_time', 'updated_time')
+    extra = 0
+
+class SparePartInline(admin.StackedInline):
+    model = SparePart
     can_delete = False
     readonly_fields = ('created_time', 'updated_time')
     extra = 0
-
 
 class ProductImagesInline(admin.StackedInline):
     model = ProductImages
@@ -45,16 +64,23 @@ class CatalogProductInline(admin.StackedInline):
 # ---------- Product ----------
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('get_categories', 'title', 'product_type', 'is_active')
+    list_display = ('title', 'product_type', 'is_active', 'get_like', 'get_dislike')
     search_fields = ('title', )
-    list_filter = ('category', 'product_type', 'is_active',)
-    inlines = (ProductDetailsInline, ProductImagesInline, CatalogProductInline)
+    list_filter = ('category', 'product_type', 'is_active', 'berand')
+    inlines = (ProductDetailsInline, SparePartInline,ProductImagesInline, CatalogProductInline, ProductCommentAdmin)
+    list_display_links = ('title', 'product_type')
     
-    filter_horizontal = ('category',)
+    filter_horizontal = ('category','like', 'un_like')
 
     def get_categories(self, obj):
         return ", ".join([c.title for c in obj.category.all()])
-    get_categories.short_description = "دسته‌بندی‌ها"
+    get_categories.short_description = "دسته‌بندی‌ها" # type: ignore
+    
+    def get_like(self, obj):
+        return obj.get_like()
+    
+    def get_dislike(self, obj):
+        return obj.get_unlike()
 
 
 # ---------- Categories ----------
@@ -66,11 +92,13 @@ class CategoriesAdmin(admin.ModelAdmin):
 
 
 # ---------- ProductDetails ----------
-@admin.register(ProductDetails)
+@admin.register(Door)
 class ProductDetailsAdmin(admin.ModelAdmin):
     list_display = ('product', 'opening_type', 'direction_opening', 'color', 'size')
     search_fields = ('product__title',)
     list_filter = ('opening_type', 'direction_opening', 'fire_resistant', 'has_sensor')
+    
+    filter_horizontal = ('usage',)
 
 
 # ---------- Color ----------
@@ -84,7 +112,7 @@ class ColorAdmin(admin.ModelAdmin):
 # ---------- Size ----------
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ('width', 'height', 'unit')
+    list_display = ('width', 'height', 'length','unit')
     search_fields = ('unit__title',)
     list_filter = ('unit',)
 
@@ -107,6 +135,11 @@ class ProductImagesAdmin(admin.ModelAdmin):
 # ---------- CatalogProduct ----------
 @admin.register(CatalogProduct)
 class CatalogProductAdmin(admin.ModelAdmin):
-    list_display = ('product', 'is_primary', 'created_time')
-    list_filter = ('is_primary',)
+    list_display = ('product', 'created_time')
     readonly_fields = ('created_time', 'updated_time')
+
+
+@admin.register(ProductComment)
+class ProductCommentAdmin(admin.ModelAdmin):
+    list_display = ('product', 'full_name', 'is_approved')
+    

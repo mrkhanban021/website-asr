@@ -1,6 +1,10 @@
 from django.db import models
 from identify.models import BaseModel
 from django.utils.text import slugify
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 def upload_product_images(instance, filename):
@@ -18,6 +22,21 @@ def generate_unique_slug(model, field_value):
         slug = f"{base_slug}-{counter}"
         counter += 1
     return slug
+
+
+class Usage(BaseModel):
+
+    title = models.CharField(
+        max_length=100,
+        unique=True,
+        help_text="عنوان کاربرد (مسکونی، تجاری، بیمارستانی)"
+    )
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ('-created_time',)
 
 
 class Categories(BaseModel):
@@ -50,6 +69,12 @@ class Categories(BaseModel):
         help_text='تصویر دسته‌بندی'
     )
 
+    description = models.TextField(
+        null=True,
+        blank=True,
+        help_text='توضیح مختصر'
+    )
+
     is_active = models.BooleanField(
         default=True,
         help_text='فعال / غیرفعال'
@@ -70,7 +95,8 @@ class Categories(BaseModel):
 class Unit(BaseModel):
     title = models.CharField(
         max_length=50,
-        help_text='عنوان واحد اندازه‌گیری (مثلاً سانتی‌متر)'
+        help_text='عنوان واحد اندازه‌گیری (مثلاً سانتی‌متر)',
+        unique=True
     )
 
     symbol = models.CharField(
@@ -91,23 +117,34 @@ class Product(BaseModel):
         DOOR = 'door', 'درب آسانسور'
         SPARE = 'spare', 'قطعه یدکی'
 
+    class BerandType(models.TextChoices):
+        RADPLUS = 'radplus', 'رادپلاس'
+        SELECOMPLUS = 'selecom_plus', 'سلکوم پلاس'
+        HALFSELECOM = 'half_selcom', 'نیمه سلکوم'
+        ASR = 'asr', 'آریان سیستم رو'
+
+    title = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        help_text='نام کلی محصول'
+    )
+
+    slug = models.SlugField(unique=True, allow_unicode=True,
+                            null=True, blank=True, help_text='اسلاگ فیلد')
+
     category = models.ManyToManyField(
         Categories,
         related_name='products',
         help_text='دسته‌بندی‌های محصول'
     )
 
-    title = models.CharField(
-        max_length=120,
-        unique=True,
-        help_text='نام محصول'
-    )
-
-    slug = models.SlugField(
-        allow_unicode=True,
-        unique=True,
+    berand = models.CharField(
+        max_length=50,
+        null=True,
         blank=True,
-        help_text='اسلاگ محصول برای URL'
+        choices=BerandType.choices,
+        help_text='برند محصول'
     )
 
     product_type = models.CharField(
@@ -121,6 +158,16 @@ class Product(BaseModel):
         help_text='فعال / غیرفعال'
     )
 
+    like = models.ManyToManyField(
+        User, blank=True, help_text='کاربران کاربران که لایک کردن', related_name='like_product')
+    un_like = models.ManyToManyField(
+        User, blank=True, help_text='کاربران دیس لایک کرده اند', related_name='unlike_product')
+
+    def get_like(self):
+        return self.like.count()
+
+    def get_unlike(self):
+        return self.un_like.count()
 
     class Meta:
         ordering = ('-created_time',)
@@ -135,21 +182,34 @@ class Product(BaseModel):
         super().save(*args, **kwargs)
 
 
-class ProductDetails(BaseModel):
+class Door(BaseModel):
     class OpeningType(models.TextChoices):
         CENTRAL = 'Central', 'سانترال'
         TELESCOPIC = 'telescopic', 'تلسکوپی'
 
     class DirectionOpening(models.TextChoices):
-        LEFT = 'left', 'چپ'
-        RIGHT = 'right', 'راست'
-        MID = 'mid', 'وسط'
+        LEFT = 'left', 'چپ باز شو'
+        RIGHT = 'right', 'راست باز شو'
+        MID = 'mid', 'وسط باز شو'
+
+    LEAF_CHOICES = (
+        (1, "تک‌لته"),
+        (2, "دولته"),
+        (3, "سه‌لته"),
+        (4, "چهارلته"),
+    )
 
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
         related_name='details',
         help_text='محصول مرتبط'
+    )
+
+    title = models.CharField(
+        max_length=100,
+        null=True, blank=True,
+        help_text='نام دقیق محصول'
     )
 
     color = models.ForeignKey(
@@ -189,7 +249,7 @@ class ProductDetails(BaseModel):
         null=True,
         help_text='جنس متریال'
     )
-    
+
     meta_title = models.CharField(
         max_length=60,
         blank=True,
@@ -203,12 +263,14 @@ class ProductDetails(BaseModel):
         null=True,
         help_text='توضیحات سئو (Meta Description)'
     )
-    
-    
-    usage = models.CharField(
-        max_length=100,
-        blank=True,
-        help_text='کاربرد (مسکونی، تجاری، بیمارستانی)'
+
+    usage = models.ManyToManyField('Usage', blank=True, help_text='کاربرد ها')
+
+    leaf_count = models.PositiveSmallIntegerField(
+        choices=LEAF_CHOICES,
+        help_text="تعداد لته",
+        null=True,
+        blank=True
     )
 
     fire_resistant = models.BooleanField(
@@ -226,8 +288,62 @@ class ProductDetails(BaseModel):
         help_text='توضیحات تکمیلی محصول'
     )
 
+    slug = models.SlugField(unique=True, allow_unicode=True,
+                            null=True, blank=True, help_text='اسلاگ فیلد')
+
     class Meta:
         ordering = ('-created_time',)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = generate_unique_slug(Door, self.title)
+
+        super().save(*args, **kwargs)
+
+
+class SparePart(BaseModel):
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="spare_parts",
+        help_text="محصولی که این قطعه مربوط به آن است"
+    )
+
+    title = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        help_text='عنوان قطعه یدکی'
+    )
+
+    code = models.CharField(
+        max_length=100,
+        unique=True,
+        help_text="کد قطعه یدکی"
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="وضعیت فعال بودن قطعه"
+    )
+
+    slug = models.SlugField(unique=True, allow_unicode=True,
+                            null=True, blank=True, help_text='اسلاگ فیلد')
+
+    description = models.TextField(
+        blank=True,
+        help_text='توضیحات تکمیلی محصول'
+    )
+
+    def __str__(self):
+        return f"{self.title} - {self.product.title}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = generate_unique_slug(Door, self.title)
+
+        super().save(*args, **kwargs)
 
 
 class Color(BaseModel):
@@ -270,13 +386,20 @@ class Size(BaseModel):
         null=True, blank=True,
         help_text='ارتفاع'
     )
+    length = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        help_text='طول'
+    )
 
     class Meta:
         ordering = ('-created_time',)
 
     def __str__(self):
         if self.width and self.height:
-             return f"{self.width}×{self.height}"
+            return f"عرض({self.width})×ارتفاع({self.height}) {self.unit}"
+        if self.length:
+            return f"طول-({self.length}{self.unit})"
         return "نامشخص"
 
 
@@ -319,7 +442,7 @@ class CatalogProduct(BaseModel):
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
-        related_name='catalog_files',  # اصلاح شد
+        related_name='catalog_files',
         help_text='محصول مربوطه'
     )
 
@@ -328,11 +451,6 @@ class CatalogProduct(BaseModel):
         help_text='تصویر محصول',
         null=True,
         blank=True
-    )
-
-    is_primary = models.BooleanField(
-        default=False,
-        help_text='تصویر اصلی'
     )
 
     class Meta:
@@ -350,3 +468,64 @@ class CatalogProduct(BaseModel):
             except CatalogProduct.DoesNotExist:
                 pass
         super().save(*args, **kwargs)
+
+
+class ProductComment(BaseModel):
+    product = models.ForeignKey(
+        "Product",
+        on_delete=models.CASCADE,
+        related_name="comments",
+        help_text="محصول مربوطه"
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        help_text="کاربر ثبت‌نام شده"
+    )
+
+    parent = models.ForeignKey(
+        "self",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="replies",
+        help_text="کامنت والد (برای ریپلای)"
+    )
+
+    full_name = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="نام ارسال‌کننده (برای کاربران مهمان)"
+    )
+
+    text = models.TextField(
+        help_text="متن نظر"
+    )
+
+    is_approved = models.BooleanField(
+        default=False,
+        help_text="آیا توسط ادمین تأیید شده؟"
+    )
+
+    class Meta:
+        ordering = ('-created_time',)
+
+    def __str__(self):
+        if self.full_name:
+            return f"{self.full_clean} {self.product.title}"
+
+    @property
+    def display_name(self):
+        if self.full_name:
+            return self.full_name
+
+        if self.user:
+            try:
+                return self.user.profile.first_name or self.user.profile.display_name  # type: ignore
+            except Exception:
+                return self.user.username
+
+        return "کاربر مهمان"

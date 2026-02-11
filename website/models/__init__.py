@@ -4,10 +4,13 @@ from .site_data import (
 from .products import (
     Categories,
     Product,
-    ProductDetails,
+    Door,
     Size,
     Color,
     Unit,
     ProductImages,
-    CatalogProduct
+    CatalogProduct,
+    SparePart,
+    Usage,
+    ProductComment
 )

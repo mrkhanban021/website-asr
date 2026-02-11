@@ -1,0 +1,21 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock title %}
+{% block links %}
+{% endblock links %}
+{% block content %}
+<div class="conta">
+        {% for product in products %}
+            <div class="card card-img" style="width: 18rem">
+                <img src="{{product.primary_images.0.image.url}}" class="imgs" alt="{{product.title}}" />
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <a href="#" class="btn btn-primary">نمایش دسته بندی</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+{% block scripts %}
+{% endblock scripts %}
