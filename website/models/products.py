@@ -420,6 +420,10 @@ class ProductImages(BaseModel):
         default=False,
         help_text='تصویر اصلی'
     )
+    is_active = models.BooleanField(
+        default=True,
+        help_text='فعال بودن'
+    )
 
     class Meta:
         ordering = ('-created_time',)
@@ -451,6 +455,10 @@ class CatalogProduct(BaseModel):
         help_text='تصویر محصول',
         null=True,
         blank=True
+    )
+    is_active = models.BooleanField(
+        default=True,
+        help_text='فعال بودن'
     )
 
     class Meta:
@@ -514,8 +522,8 @@ class ProductComment(BaseModel):
         ordering = ('-created_time',)
 
     def __str__(self):
-        if self.full_name:
-            return f"{self.full_clean} {self.product.title}"
+        if not self.full_name:
+            return f"{self.product.title}"
 
     @property
     def display_name(self):

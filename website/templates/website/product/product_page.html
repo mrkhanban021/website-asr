@@ -3,15 +3,18 @@
 {% block title %}
 {% endblock title %}
 {% block links %}
+    <link rel="stylesheet" href="{% static 'css/product/product.css' %}">
 {% endblock links %}
 {% block content %}
-<div class="conta">
+    <div class="conta">
         {% for product in products %}
-            <div class="card card-img" style="width: 18rem">
-                <img src="{{product.primary_images.0.image.url}}" class="imgs" alt="{{product.title}}" />
+            <div class="card card-img" style="width: 17rem">
+                <img src="{{ product.primary_images.0.image.url }}"
+                     class="imgs"
+                     alt="{{ product.title }}" />
                 <div class="card-body">
                     <h5 class="card-title">{{ product.title }}</h5>
-                    <a href="#" class="btn btn-primary">نمایش دسته بندی</a>
+                    <a href="{% url 'website:product:product_detail' product.id %}" class="btn btn-primary">نمایش</a>
                 </div>
             </div>
         {% endfor %}
