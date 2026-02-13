@@ -1,11 +1,75 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block title %}
+    {{ product_det.title }}
 {% endblock title %}
 {% block links %}
+    <link rel="stylesheet"
+          href="{% static 'css/product/product_details.css' %}">
 {% endblock links %}
 {% block content %}
-    <h1>product details</h1>
+    <section class="section">
+        <div class="images">
+            <div class="slider">
+                {% for image in product_det.product_images %}
+                    <div class="slide">
+                        <img src="{{ image.image.url }}" alt="{{ product_det.title }}">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="details">
+            نام محصول : {{product_det.title}}
+        </div>
+        <div class="description_full">
+            <small>
+                {% if product_det.product_type == 'door' %}
+                    {{ product_det.product_details.0.description }}
+                {% else %}
+                    dfd
+                {% endif %}
+            </small>
+        </div>
+        <div class="comment">
+            <div class="comment-form">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text"
+                           name="name"
+                           placeholder="نام شما"
+                           required
+                           class="form-control"
+                           oninvalid="this.setCustomValidity('نام خود را وارد کنید')">
+                    <textarea name="body" class="form-control" placeholder="نظر خود را بنویسید..." required oninvalid="this.setCustomValidity('نظر خود را بنوبسید')"></textarea>
+                    <button type="submit" class="btn btn-outline-primary">ارسال نظر</button>
+                </form>
+            </div>
+
+            <div class="comments">
+        {% for comment in comments %}
+            <div class="comment-box">
+
+                <strong>{{ comment.display_name }}</strong>
+                <p>{{ comment.text }}</p>
+                <small dir="ltr">{{ comment.created_time_jalali }}</small>
+
+                <div class="replies">
+                    {% for reply in comment.replies.all %}
+                        <div class="reply-box">
+                            <strong>{{ reply.display_name }}</strong>
+                            <p>{{ reply.text }}</p>
+                            <small dir="ltr">{{ reply.created_time_jalali }}</small>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        {% empty %}
+            <p>هنوز نظری ثبت نشده است.</p>
+        {% endfor %}
+    </div>
+        </div>
+    </section>
 {% endblock content %}
 {% block scripts %}
 {% endblock scripts %}

@@ -285,7 +285,8 @@ class Door(BaseModel):
 
     description = models.TextField(
         blank=True,
-        help_text='توضیحات تکمیلی محصول'
+        help_text='توضیحات تکمیلی محصول',
+        max_length=1000
     )
 
     slug = models.SlugField(unique=True, allow_unicode=True,
@@ -333,7 +334,8 @@ class SparePart(BaseModel):
 
     description = models.TextField(
         blank=True,
-        help_text='توضیحات تکمیلی محصول'
+        help_text='توضیحات تکمیلی محصول',
+        max_length=1000
     )
 
     def __str__(self):
@@ -510,7 +512,8 @@ class ProductComment(BaseModel):
     )
 
     text = models.TextField(
-        help_text="متن نظر"
+        help_text="متن نظر",
+        max_length=1000
     )
 
     is_approved = models.BooleanField(
@@ -524,6 +527,7 @@ class ProductComment(BaseModel):
     def __str__(self):
         if not self.full_name:
             return f"{self.product.title}"
+        return f"{self.full_name} - {self.product.title}"
 
     @property
     def display_name(self):
@@ -532,8 +536,19 @@ class ProductComment(BaseModel):
 
         if self.user:
             try:
-                return self.user.profile.first_name or self.user.profile.display_name  # type: ignore
+                return f"{self.user.user_profile.first_name} {self.user.user_profile.last_name}" or self.full_name  # type: ignore
             except Exception:
-                return self.user.username
+                return self.full_name
 
         return "کاربر مهمان"
+    
+
+
+    def save(self, *args, **kwargs):
+        if not self.full_name:
+            if self.user:
+                first_name = getattr(self.user.user_profile, 'first_name', 'کاربر')
+                last_name = getattr(self.user.user_profile, 'last_name', 'بدون نام')
+                self.full_name = f"{first_name} {last_name}"
+            self.full_name = f"کاربر بدون نام"
+        super().save(*args, **kwargs)

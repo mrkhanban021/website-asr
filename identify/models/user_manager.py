@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 import uuid
 import jdatetime
+from django.utils import timezone
 
 
 def save_document(instanse, filename):
@@ -52,6 +53,20 @@ class BaseModel(models.Model):
             models.Index(fields=['created_time']),
             models.Index(fields=['updated_time']),
         ]
+    @property
+    def created_time_jalali(self):
+        if not self.created_time:
+            return ""
+        
+        local_dt = timezone.localtime(self.created_time)
+        return jdatetime.datetime.fromgregorian(datetime=local_dt).strftime("%Y-%m-%d %H:%M")
+    @property
+    def updated_time_jalali(self):
+        if not self.created_time:
+            return ""
+        
+        local_dt = timezone.localtime(self.updated_time)
+        return jdatetime.datetime.fromgregorian(datetime=local_dt).strftime("%Y-%m-%d %H:%M")
 
 
 class Profile(BaseModel):

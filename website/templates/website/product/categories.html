@@ -1,6 +1,7 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block title %}
+دسته بندی محصولات
 {% endblock title %}
 {% block links %}
     <link rel="stylesheet" href="{% static 'css/product/categories.css' %}">
@@ -8,12 +9,15 @@
 {% block content %}
     <div class="conta">
         {% for category in categories %}
-            <div class="card card-img" style="width: 18rem">
-                <img src="{{ category.image.url }}" class="imgs" alt="{{category.title}}" />
-                <div class="card-body">
+            <div class="premium-card">
+                <div class="premium-image">
+
+                    <img src="{{ category.image.url }}" class="imgs" alt="{{category.title}}" />
+                </div>
+                <div class="premium-body"">
                     <h5 class="card-title">{{ category.title }}</h5>
-                    <p class="card-text">{{ category.description|default:'' }}</p>
-                    <a href="{% url 'website:product:get_product' category.id %}" class="btn btn-primary">نمایش دسته بندی</a>
+                    <small class="card-text">{{ category.description|default:'' }}</small>
+                    <a href="{% url 'website:product:get_product' category.id %}" class="premium-btn">نمایش دسته بندی</a>
                 </div>
             </div>
         {% endfor %}

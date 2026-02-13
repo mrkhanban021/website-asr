@@ -10,6 +10,9 @@ from website.models import (
 )
 from django.db.models import QuerySet, Prefetch
 from django.core.paginator import Paginator
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 # نمایش دسته بندی ها
@@ -21,7 +24,7 @@ def selector_categories(*, is_active: bool) -> QuerySet:
 
 
 # نمایش جزیات دسته بندی
-def select_products(*, category_id: str) -> QuerySet:
+def select_products(*, category_id: str, user=None) -> QuerySet:
     if not category_id:
         return Product.objects.none()
 
@@ -43,6 +46,11 @@ def select_products(*, category_id: str) -> QuerySet:
             Prefetch(
                 'spare_parts',
                 queryset=SparePart.objects.filter(is_active=True)
+            ),
+            Prefetch(
+                'like',
+                queryset=User.objects.filter(id=user.id) if user and user.is_authenticated else User.objects.none(),
+                to_attr='liked_by_current_user'
             )
         )
         return product
@@ -72,7 +80,7 @@ def get_product_details(*, product_id: str):
             ),
             Prefetch(
                 'images',
-                queryset=ProductImages.objects.all(),
+                queryset=ProductImages.objects.filter(is_primary=True),
                 to_attr='product_images'
             ),
             Prefetch(
