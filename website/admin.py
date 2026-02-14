@@ -30,33 +30,28 @@ class SiteSettingAdmin(admin.ModelAdmin):
 # ---------- Inlines for Product ----------
 class ProductDetailsInline(admin.StackedInline):
     model = Door
-    can_delete = False
     readonly_fields = ('created_time', 'updated_time')
     filter_horizontal =('usage',)
     extra = 0
 
 class ProductCommentAdmin(admin.StackedInline):
     model = ProductComment
-    can_delete = False
     readonly_fields =  ('created_time', 'updated_time')
     extra = 0
 
 class SparePartInline(admin.StackedInline):
     model = SparePart
-    can_delete = False
     readonly_fields = ('created_time', 'updated_time')
     extra = 0
 
 class ProductImagesInline(admin.StackedInline):
     model = ProductImages
-    can_delete = False
     readonly_fields = ('created_time', 'updated_time')
     extra = 0
 
 
 class CatalogProductInline(admin.StackedInline):
     model = CatalogProduct
-    can_delete = False
     readonly_fields = ('created_time', 'updated_time')
     extra = 0
 

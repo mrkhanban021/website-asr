@@ -109,6 +109,7 @@ class Unit(BaseModel):
 
     def __str__(self):
         return self.symbol
+    
 
 
 class Product(BaseModel):
@@ -396,6 +397,18 @@ class Size(BaseModel):
 
     class Meta:
         ordering = ('-created_time',)
+
+    @property
+    def height_display(self):
+        return f"{self.height}{self.unit.symbol}"
+    
+    @property
+    def length_display(self):
+        return f"{self.length}{self.unit.symbol}"
+    
+    @property
+    def width_display(self):
+        return f"{self.width}{self.unit.symbol}"
 
     def __str__(self):
         if self.width and self.height:

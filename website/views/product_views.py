@@ -16,7 +16,13 @@ from website.services import (
     like_product
 )
 
-#بر گرداندن دسته بندی ها
+from website.forms import (
+    ProductCommentForms
+)
+
+# بر گرداندن دسته بندی ها
+
+
 def get_Categories(request):
     data = selector_categories(is_active=True)
 
@@ -26,9 +32,9 @@ def get_Categories(request):
     return render(request, 'website/product/categories.html', context)
 
 
-#برگرداندن محصولات دسته بندی
+# برگرداندن محصولات دسته بندی
 def get_product(request, pk):
-    
+
     data = select_products(category_id=pk, user=request.user)
     if not data:
         messages.warning(request, 'داده ای یافت نشد')
@@ -41,20 +47,27 @@ def get_product(request, pk):
     return render(request, 'website/product/product_page.html', context)
 
 
-
 # بر گرداندن جزیات یک محصول
 def get_product_detail(request, pk):
     page_number = request.GET.get('page', 1)
     product_det = get_product_details(product_id=pk)
     product_comment = get_product_comments(product_id=pk, page_number=page_number)
-
-    if not product_det:
-        messages.warning(request, 'جزیات محصول یافت نشد')
-        return redirect('website:product:cat')
+    if request.method == 'POST':
+        form = ProductCommentForms(request.POST, user=request.user, product=product_det)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'بعد از تایید ادمین نمایش داده میشود')
+            return redirect('website:product:product_detail', pk=pk)
+    else:
+        form = ProductCommentForms()
+        if not product_det:
+            messages.warning(request, 'جزیات محصول یافت نشد')
+            return redirect('website:product:cat')
     
     context = {
-        'product_det': product_det,
-        'comments': product_comment
+        'product_det': product_det, # type: ignore
+        'comments': product_comment, # type: ignore
+        'form': form
     }
 
     return render(request, 'website/product/product_details.html', context)

@@ -19,57 +19,121 @@
             </div>
         </div>
         <div class="details">
-            نام محصول : {{product_det.title}}
+            {% if product_det.product_type == 'door' %}
+                <p>نام محصول : {{ product_det.title }}</p>
+                {% for details in product_det.product_details %}
+                    <p>
+                        کاربری :
+                        {% for usage in details.usage.all %}
+                            {{ usage.title }}
+                            {% if not forloop.last %}،{% endif %}
+                        {% endfor %}
+                    </p>
+                    <p>
+                        رنگ : {{ details.color.title }}
+                        <span class="color-box"
+                              title="{{ details.color.title }}"
+                              style="background-color: {{ details.color.code }}"></span>
+                    </p>
+                    <p>
+                        <em>عرض : {{ details.size.width_display }}</em>
+                        <em>ارتفاع : {{ details.size.height_display }}</em>
+                    </p>
+                    <p>
+                        نوع باز شو : <em>{{ details.opening_type }}</em>
+                    </p>
+                    <p>
+                        جهت باز شو : <em>{{ details.direction_opening }}</em>
+                    </p>
+                    <p>
+                        متریال: <em>{{ details.material }}</em>
+                    </p>
+                    <p>
+                        تعداد لته: <em>{{ details.leaf_count }}</em>
+                    </p>
+                    کاتالوگ محصول: 
+                        {% for catalog in product_det.active_catalogs %}
+                           <a href="{{ catalog.file.url }}" class="btn btn-primary"  download>{{ catalog.title|default:"دریافت" }}</a>
+                        {% empty %}
+                            کاتالوگی موجود نیست
+                        {% endfor %}
+                    
+                {% endfor %}
+            {% else %}
+                <p>نام محصول : {{ product_det.title }}</p>
+                {% for spare in product_det.active_spare_parts %}<p>کد محصول: {{ spare.code }}</p>{% endfor %}
+            {% endif %}
         </div>
         <div class="description_full">
-            <small>
+            <p>
                 {% if product_det.product_type == 'door' %}
                     {{ product_det.product_details.0.description }}
                 {% else %}
-                    dfd
+                    {{ product_det.active_spare_parts.0.description }}
                 {% endif %}
-            </small>
+            </p>
         </div>
         <div class="comment">
             <div class="comment-form">
-                <form method="post">
+                <form method="post" action="">
                     {% csrf_token %}
                     <input type="text"
-                           name="name"
+                           name="full_name"
                            placeholder="نام شما"
                            required
                            class="form-control"
                            oninvalid="this.setCustomValidity('نام خود را وارد کنید')">
-                    <textarea name="body" class="form-control" placeholder="نظر خود را بنویسید..." required oninvalid="this.setCustomValidity('نظر خود را بنوبسید')"></textarea>
+                    <textarea name="text"
+                              class="form-control"
+                              placeholder="نظر خود را بنویسید..."
+                              required
+                              oninvalid="this.setCustomValidity('نظر خود را بنوبسید')"></textarea>
                     <button type="submit" class="btn btn-outline-primary">ارسال نظر</button>
                 </form>
             </div>
-
             <div class="comments">
-        {% for comment in comments %}
-            <div class="comment-box">
-
-                <strong>{{ comment.display_name }}</strong>
-                <p>{{ comment.text }}</p>
-                <small dir="ltr">{{ comment.created_time_jalali }}</small>
-
-                <div class="replies">
-                    {% for reply in comment.replies.all %}
-                        <div class="reply-box">
-                            <strong>{{ reply.display_name }}</strong>
-                            <p>{{ reply.text }}</p>
-                            <small dir="ltr">{{ reply.created_time_jalali }}</small>
+                {% for comment in comments %}
+                    <div class="comment-box">
+                        <strong>{{ comment.display_name }}</strong>
+                        <p>{{ comment.text }}</p>
+                        <small dir="ltr">{{ comment.created_time_jalali }}</small>
+                        <div class="replies">
+                            {% for reply in comment.replies.all %}
+                                <div class="reply-box">
+                                    <strong>{{ reply.display_name }}</strong>
+                                    <p>{{ reply.text }}</p>
+                                    <small dir="ltr">{{ reply.created_time_jalali }}</small>
+                                </div>
+                            {% endfor %}
+                            <form action="" method="post">
+                                <input type="text"
+                                       name="full_name"
+                                       placeholder="نام شما"
+                                       required
+                                       class="form-control"
+                                       oninvalid="this.setCustomValidity('نام خود را وارد کنید')">
+                                <textarea name="text"
+                                          class="form-control"
+                                          placeholder="نظر خود را بنویسید..."
+                                          required
+                                          oninvalid="this.setCustomValidity('نظر خود را بنوبسید')"></textarea>
+                                <button type="submit" class="btn btn-outline-primary">ارسال نظر</button>
+                            </form>
                         </div>
-                    {% endfor %}
-                </div>
-
+                    </div>
+                {% empty %}
+                    <p>هنوز نظری ثبت نشده است.</p>
+                {% endfor %}
             </div>
-        {% empty %}
-            <p>هنوز نظری ثبت نشده است.</p>
-        {% endfor %}
-    </div>
+        </div>
+        <div class="catalog"></div>
+        <div class="pagination">
+            {% if comments.has_previous %}<a href="?page={{ comments.previous_page_number }}" class="btn btn-primary">قبلی</a>{% endif %}
+            <span>صفحه {{ comments.number }} از {{ comments.paginator.num_pages }}</span>
+            {% if comments.has_next %}<a href="?page={{ comments.next_page_number }}" class="btn btn-primary">بعدی</a>{% endif %}
         </div>
     </section>
 {% endblock content %}
 {% block scripts %}
+    <script src="{% static 'js/product_detailes.js' %}"></script>
 {% endblock scripts %}

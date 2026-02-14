@@ -80,7 +80,7 @@ def get_product_details(*, product_id: str):
             ),
             Prefetch(
                 'images',
-                queryset=ProductImages.objects.filter(is_primary=True),
+                queryset=ProductImages.objects.filter(is_active=True),
                 to_attr='product_images'
             ),
             Prefetch(
@@ -108,5 +108,5 @@ def get_product_comments(*, product_id: str, page_number: int = 1):
         .order_by('-created_time')
     )
 
-    paginator = Paginator(comments_qs, 10)
+    paginator = Paginator(comments_qs, 2)
     return paginator.get_page(page_number)
