@@ -9,7 +9,8 @@ from website.selectors import (
     select_products,
     get_product_details,
     get_data_site_settings,
-    get_product_comments
+    get_product_comments,
+    get_comment
 )
 
 from website.services import (
@@ -17,7 +18,8 @@ from website.services import (
 )
 
 from website.forms import (
-    ProductCommentForms
+    ProductCommentForms,
+    ProductCommentReplyForm
 )
 
 # بر گرداندن دسته بندی ها
@@ -53,7 +55,12 @@ def get_product_detail(request, pk):
     product_det = get_product_details(product_id=pk)
     product_comment = get_product_comments(product_id=pk, page_number=page_number)
     if request.method == 'POST':
-        form = ProductCommentForms(request.POST, user=request.user, product=product_det)
+        parent_id = request.POST.get("parent_id")
+        parent_comment = None
+        if parent_id:
+            parent_comment = get_comment(product_comment_id=parent_id)
+
+        form = ProductCommentReplyForm(request.POST, user=request.user, product=product_det, parent=parent_comment)
         if form.is_valid():
             form.save()
             messages.success(request, 'بعد از تایید ادمین نمایش داده میشود')

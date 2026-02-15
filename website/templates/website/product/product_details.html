@@ -36,20 +36,20 @@
                               style="background-color: {{ details.color.code }}"></span>
                     </p>
                     <p>
-                        <em>عرض : {{ details.size.width_display }}</em>
-                        <em>ارتفاع : {{ details.size.height_display }}</em>
+                       عرض : {{ details.size.width_display }}
+                     ارتفاع : {{ details.size.height_display }}
                     </p>
                     <p>
-                        نوع باز شو : <em>{{ details.opening_type }}</em>
+                        نوع باز شو : {{ details.opening_type }}
                     </p>
                     <p>
-                        جهت باز شو : <em>{{ details.direction_opening }}</em>
+                        جهت باز شو : {{ details.direction_opening }}
                     </p>
                     <p>
-                        متریال: <em>{{ details.material }}</em>
+                        متریال: {{ details.material }}
                     </p>
                     <p>
-                        تعداد لته: <em>{{ details.leaf_count }}</em>
+                        تعداد لته: {{ details.leaf_count }}
                     </p>
                     کاتالوگ محصول: 
                         {% for catalog in product_det.active_catalogs %}
@@ -98,7 +98,7 @@
                         <p>{{ comment.text }}</p>
                         <small dir="ltr">{{ comment.created_time_jalali }}</small>
                         <div class="replies">
-                            {% for reply in comment.replies.all %}
+                            {% for reply in comment.replies.all|slice:":3" %}
                                 <div class="reply-box">
                                     <strong>{{ reply.display_name }}</strong>
                                     <p>{{ reply.text }}</p>
@@ -106,6 +106,8 @@
                                 </div>
                             {% endfor %}
                             <form action="" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
                                 <input type="text"
                                        name="full_name"
                                        placeholder="نام شما"

@@ -94,7 +94,7 @@ def get_product_details(*, product_id: str):
 
 # دریافت کامنت های یک محصول
 
-
+#دریافت کامنت های کل
 def get_product_comments(*, product_id: str, page_number: int = 1):
     comments_qs = (
         ProductComment.objects
@@ -104,9 +104,21 @@ def get_product_comments(*, product_id: str, page_number: int = 1):
             parent__isnull=True
         )
         .select_related('user')
-        .prefetch_related('replies')
+        .prefetch_related(
+            Prefetch(
+                'replies',
+                queryset=ProductComment.objects.filter(parent__isnull=False, is_approved=True)
+            )
+        )
         .order_by('-created_time')
     )
 
     paginator = Paginator(comments_qs, 2)
     return paginator.get_page(page_number)
+
+
+# دریافت یک کامنت
+def get_comment(*, product_comment_id:str) -> object:
+    return (
+        ProductComment.objects.get(pk=product_comment_id)
+    )
