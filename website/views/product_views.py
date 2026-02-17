@@ -22,6 +22,10 @@ from website.forms import (
     ProductCommentReplyForm
 )
 
+from website.meta import (
+    product_detail_meta
+)
+
 # بر گرداندن دسته بندی ها
 
 
@@ -70,11 +74,13 @@ def get_product_detail(request, pk):
         if not product_det:
             messages.warning(request, 'جزیات محصول یافت نشد')
             return redirect('website:product:cat')
+        meta = product_detail_meta(request=request, product_data=product_det)
     
     context = {
         'product_det': product_det, # type: ignore
         'comments': product_comment, # type: ignore
-        'form': form
+        'form': form,
+        'meta':meta  # type: ignore
     }
 
     return render(request, 'website/product/product_details.html', context)

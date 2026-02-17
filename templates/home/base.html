@@ -1,40 +1,36 @@
 {% load static %}
 {% load meta %}
-<!doctype html>
-<html lang="fa" dir="rtl" data-bs-theme="light">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
   <head {% meta_namespaces %}>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="{{site.data.favicon.url}}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.min.css' %}" />
+    <link rel="icon" href="{{ site.data.favicon.url }}">
     <link rel="stylesheet" href="{% static 'css/style/style.css' %}" />
-
     {% include 'meta/meta.html' %}
-    {% block extra_meta %}{% endblock extra_meta %}
-      
-    {% block links %}{% endblock links %}
-  
-    <title> آریان سیستم رو | {% block title %}{% endblock title %}</title>
+    {% block extra_meta %}
+    {% endblock extra_meta %}
+    {% block links %}
+    {% endblock links %}
+    <title> آریان سیستم رو |
+      {% block title %}
+      {% endblock title %}
+    </title>
   </head>
-  <body class="bg-body text-body">
-
+  <body>
     <div id="loading-screen">
-        <div class="spinner"></div>
+      <div class="spinner"></div>
     </div>
-
     <main id="main-content" style="display:none;">
       {% include 'header/header.html' %}
-
-      {% block content %}{% endblock content %}
+      {% block content %}
+      {% endblock content %}
       {% include 'home/tost.html' %}
-
       {% include 'footer/footer.html' %}
     </main>
-    
-
     <!-- JS -->
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    {% block scripts %}{% endblock scripts %}
+    {% block scripts %}
+    {% endblock scripts %}
   </body>
 </html>

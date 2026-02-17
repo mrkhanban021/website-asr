@@ -1,8 +1,17 @@
 {% extends 'home/base.html' %}
+
 {% load static %}
+
+{% load meta %}
+
 {% block title %}
     {{ product_det.title }}
 {% endblock title %}
+
+{% block extra_meta %}
+    {{ meta.as_html|safe }}
+{% endblock extra_meta %}
+
 {% block links %}
     <link rel="stylesheet"
           href="{% static 'css/product/product_details.css' %}">
@@ -20,48 +29,123 @@
         </div>
         <div class="details">
             {% if product_det.product_type == 'door' %}
-                <p>نام محصول : {{ product_det.title }}</p>
-                {% for details in product_det.product_details %}
-                    <p>
-                        کاربری :
-                        {% for usage in details.usage.all %}
-                            {{ usage.title }}
-                            {% if not forloop.last %}،{% endif %}
+                <table dir="rtl">
+                    <tbody>
+                        <tr>
+                            <th scope="row">نام محصول</th>
+                            <td>{{ product_det.title }}</td>
+                        </tr>
+                        {% for details in product_det.product_details %}
+                            <tr>
+                                <th scope="row">رنگ کالا</th>
+                                <td>{{ details.color.title }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">کد رنگی</th>
+                                <td>{{ details.color.code }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">سایز</th>
+                                <td>{{ details.size.height_display }} x {{ details.size.width_display }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">نوع باز شو</th>
+                                <td>{{ details.opening_type }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">جهت باز شو</th>
+                                <td>{{ details.direction_opening }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">متریال</th>
+                                <td>{{ details.material }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">کاردبر ها</th>
+                                <td>
+                                    {% for u in details.usage.all %}
+                                        {{ u.title }}
+                                        {% if not forloop.last %},{% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">تعداد لته</th>
+                                <td>{{ details.leaf_count }} عدد</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">مقاومت دربرابر حریق</th>
+                                <td>
+                                    {% if details.fire_resistant %}
+                                        <svg width="13"
+                                             height="13"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 512 512">
+                                            <path fill="#649c35" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
+                                        </svg>
+                                    {% else %}
+                                        <svg width="13"
+                                             height="13"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 512 512">
+                                            <path fill="#c63d3d" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+                                        </svg>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">سنسور ایمینی</th>
+                                <td>
+                                    {% if details.has_sensor %}
+                                        <svg width="13"
+                                             height="13"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 512 512">
+                                            <path fill="#649c35" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
+                                        </svg>
+                                    {% else %}
+                                        <svg width="13"
+                                             height="13"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 512 512">
+                                            <path fill="#c63d3d" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
+                                        </svg>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">کاتالوگ</th>
+                                <td>
+                                    {% for cat in product_det.active_catalogs %}
+                                        <a href="{{ cat.file.url }}" download class="link">دریافت فایل</a>
+                                        {% if not forloop.last %}&nbsp{% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
                         {% endfor %}
-                    </p>
-                    <p>
-                        رنگ : {{ details.color.title }}
-                        <span class="color-box"
-                              title="{{ details.color.title }}"
-                              style="background-color: {{ details.color.code }}"></span>
-                    </p>
-                    <p>
-                       عرض : {{ details.size.width_display }}
-                     ارتفاع : {{ details.size.height_display }}
-                    </p>
-                    <p>
-                        نوع باز شو : {{ details.opening_type }}
-                    </p>
-                    <p>
-                        جهت باز شو : {{ details.direction_opening }}
-                    </p>
-                    <p>
-                        متریال: {{ details.material }}
-                    </p>
-                    <p>
-                        تعداد لته: {{ details.leaf_count }}
-                    </p>
-                    کاتالوگ محصول: 
-                        {% for catalog in product_det.active_catalogs %}
-                           <a href="{{ catalog.file.url }}" class="btn btn-primary"  download>{{ catalog.title|default:"دریافت" }}</a>
-                        {% empty %}
-                            کاتالوگی موجود نیست
-                        {% endfor %}
-                    
-                {% endfor %}
+                    </tbody>
+                </table>
             {% else %}
                 <p>نام محصول : {{ product_det.title }}</p>
-                {% for spare in product_det.active_spare_parts %}<p>کد محصول: {{ spare.code }}</p>{% endfor %}
+                {% for spare in product_det.active_spare_parts %}
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th scope="row">کد محصول</th>
+                                <td>{{ spare.code }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">کاتالوگ</th>
+                                <td>
+                                    {% for cat in product_det.active_catalogs %}
+                                        <a href="{{ cat.file.url }}" download class="link">دریافت فایل</a>
+                                        {% if not forloop.last %}&nbsp{% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endfor %}
             {% endif %}
         </div>
         <div class="description_full">
@@ -81,10 +165,10 @@
                            name="full_name"
                            placeholder="نام شما"
                            required
-                           class="form-control"
+                           class="form"
                            oninvalid="this.setCustomValidity('نام خود را وارد کنید')">
                     <textarea name="text"
-                              class="form-control"
+                              class="form"
                               placeholder="نظر خود را بنویسید..."
                               required
                               oninvalid="this.setCustomValidity('نظر خود را بنوبسید')"></textarea>
@@ -112,10 +196,10 @@
                                        name="full_name"
                                        placeholder="نام شما"
                                        required
-                                       class="form-control"
+                                       class="form"
                                        oninvalid="this.setCustomValidity('نام خود را وارد کنید')">
                                 <textarea name="text"
-                                          class="form-control"
+                                          class="form"
                                           placeholder="نظر خود را بنویسید..."
                                           required
                                           oninvalid="this.setCustomValidity('نظر خود را بنوبسید')"></textarea>
@@ -130,7 +214,10 @@
         </div>
         <div class="catalog"></div>
         <div class="pagination">
-            {% if comments.has_previous %}<a href="?page={{ comments.previous_page_number }}" class="btn btn-primary">قبلی</a>{% endif %}
+            {% if comments.has_previous %}
+                <a href="?page={{ comments.previous_page_number }}"
+                   class="btn btn-primary">قبلی</a>
+            {% endif %}
             <span>صفحه {{ comments.number }} از {{ comments.paginator.num_pages }}</span>
             {% if comments.has_next %}<a href="?page={{ comments.next_page_number }}" class="btn btn-primary">بعدی</a>{% endif %}
         </div>

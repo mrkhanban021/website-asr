@@ -265,7 +265,7 @@ class Door(BaseModel):
         help_text='توضیحات سئو (Meta Description)'
     )
 
-    usage = models.ManyToManyField('Usage', blank=True, help_text='کاربرد ها')
+    usage = models.ManyToManyField('Usage', blank=True, help_text='کاربرد ها', related_name='doors')
 
     leaf_count = models.PositiveSmallIntegerField(
         choices=LEAF_CHOICES,

@@ -1,37 +1,30 @@
 {% load static %}
-<!doctype html>
-<html lang="fa" dir="rtl" data-bs-theme="light">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="{{site.data.favicon.url}}" />
-  <link rel="stylesheet" href="{% static 'css/bootstrap.rtl.min.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/style/style.css' %}" />
-
-  {% block links %}{% endblock links %}
-
-  <title>آریان سیستم رو | {% block title %}{% endblock title %}</title>
-</head>
-
-<body class="bg-body text-body" style="max-height: 100vh; overflow-y: hidden;">
-
-  <div id="loading-screen">
-    <div class="spinner"></div>
-  </div>
-
-  <main id="main-content" style="display:none;">
-    {% include 'header/header.html' %}
-    {% block content %}
-    {% endblock content %}
-    {% include 'home/tost.html' %}
-
-  </main>
-
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'js/main.js' %}"></script>
-  {% block scripts %}
-  {% endblock scripts %}
-</body>
-
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{{ site.data.favicon.url }}" />
+    <link rel="stylesheet" href="{% static 'css/style/style.css' %}" />
+    {% block links %}
+    {% endblock links %}
+    <title>آریان سیستم رو |
+      {% block title %}
+      {% endblock title %}
+    </title>
+  </head>
+  <body>
+    <div id="loading-screen">
+      <div class="spinner"></div>
+    </div>
+    <main id="main-content" style="display:none;">
+      {% include 'header/header.html' %}
+      {% block content %}
+      {% endblock content %}
+      {% include 'home/tost.html' %}
+    </main>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block scripts %}
+    {% endblock scripts %}
+  </body>
 </html>

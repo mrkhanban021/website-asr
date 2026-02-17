@@ -1,34 +1,23 @@
 {% extends 'home/base.html' %}
 {% load static %}
-
 {% block links %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock links %}
-
-
 {% block title %}
-صفحه اصلی
+  صفحه اصلی
 {% endblock title %}
-
-
 {% block content %}
-
-<div class="d-flex justify-content-around align-content-center
-        d-md-flex justify-content-md-around align-content-md-center
-         text-responsive">
-
-  <div class="d-flex justify-content-center align-content-center flex-column
-              d-md-flex justify-content-md-center align-content-md-center flex-md-column">
-    <div class="title-baner text-baner mb-5">
-      <h3 class="text-baner">آریان سیستم رو</h3>
-      <h4 class="text-baner">تولید کننده درب تمام اتوماتیک آسانسور</h4>
+  <div class="d-flex justify-content-around align-content-center d-md-flex justify-content-md-around align-content-md-center">
+    <div class="d-flex justify-content-center align-content-center flex-column d-md-flex justify-content-md-center align-content-md-center flex-md-column">
+      <div class="title-baner text-baner mb-5">
+        <h3 class="text-baner">آریان سیستم رو</h3>
+        <h4 class="text-baner">تولید کننده درب تمام اتوماتیک آسانسور</h4>
+      </div>
+    </div>
+    <div class="baner">
+      <img class="img-fluid object-fit-cover"
+           src="{% static 'images/baner.png' %}"
+           alt="baner">
     </div>
   </div>
-
-
-  <div class="baner">
-    <img class="img-fluid object-fit-cover" src="{% static 'images/baner.jpg' %}" alt="baner">
-  </div>
-</div>
-
 {% endblock content %}
