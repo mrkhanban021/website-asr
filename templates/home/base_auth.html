@@ -1,28 +1,49 @@
 {% load static %}
+{% load meta %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" data-theme="dark">
-  <head>
+  <head {% meta_namespaces %}>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="{{ site.data.favicon.url }}" />
+    <link rel="icon"
+          type="image/png"
+          href="{% static 'images/fav/favicon-96x96.png' %}"
+          sizes="96x96" />
+    <link rel="icon"
+          type="image/svg+xml"
+          href="{% static 'images/fav/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'images/fav/favicon.ico' %}" />
+    <link rel="apple-touch-icon"
+          sizes="180x180"
+          href="{% static 'images/fav/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="asr-elevator" />
+    <link rel="manifest" href="{% static 'images/fav/site.webmanifest' %}" />
     <link rel="stylesheet" href="{% static 'css/style/style.css' %}" />
+    {% include 'meta/meta.html' %}
+    {% block extra_meta %}
+    {% endblock extra_meta %}
     {% block links %}
     {% endblock links %}
-    <title>آریان سیستم رو |
+    <title> آریان سیستم رو |
       {% block title %}
       {% endblock title %}
     </title>
   </head>
   <body>
-    <div id="loading-screen">
-      <div class="spinner"></div>
+    <div id="loading" class="loading">
+      <p>درحال بار گیری</p>
     </div>
-    <main id="main-content" style="display:none;">
-      {% include 'header/header.html' %}
-      {% block content %}
-      {% endblock content %}
-      {% include 'home/tost.html' %}
-    </main>
+    <div class="" id="app">
+      <header>
+        {% include 'header/header.html' %}
+      </header>
+      <main>
+        {% block content %}
+        {% endblock content %}
+      </main>
+      <footer>
+      </footer>
+    </div>
     <script src="{% static 'js/main.js' %}"></script>
     {% block scripts %}
     {% endblock scripts %}
